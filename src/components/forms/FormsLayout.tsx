@@ -6,6 +6,7 @@ import {IErrorTypes} from "../../types/validateErrorTypes";
 interface Props {
     user: IUser,
     formErrors: IErrorTypes,
+    jsonStr: string,
     handleDelete: any,
     handleNameValidate: any,
     handleEmailValidate: any,
@@ -16,7 +17,7 @@ interface Props {
 
 const FormsLayout: FC<Props> = ({user, handleChange, handleSubmit,
                                     formErrors, handleNameValidate, handleEmailValidate,
-                                    handleMessageValidate, handleDelete
+                                    handleMessageValidate, handleDelete, jsonStr
 }) => {
 
     return (
@@ -92,6 +93,8 @@ const FormsLayout: FC<Props> = ({user, handleChange, handleSubmit,
                     <button className="button">Submit</button>
                 </div>
             </form>
+
+            <pre>{jsonStr}</pre>
         </div>
     )
 };
