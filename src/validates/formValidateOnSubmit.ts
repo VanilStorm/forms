@@ -4,31 +4,24 @@ import {IErrorTypes} from "../types/validateErrorTypes";
 export const validate = (value: IUser): IErrorTypes => {
     const errors = {} as IErrorTypes;
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
     if (!value.name) {
         errors.name = 'Name is required!'
     }
 
-
-    if (!value.email && value.email !== '') {
+    if (!value.email) {
         errors.email = 'Email is required!';
-    } else if (!emailRegex.test(value.email)) {
-        errors.email = 'Email is invalid!';
-    } else {
-        delete errors.email
     }
 
     if (!value.phone ) {
-        errors.phone = 'phone is required!'
+        errors.phone = 'Phone is required!'
     }
 
     if (!value.birthday) {
-        errors.birthday = 'birthday is required!'
+        errors.birthday = 'Birthday is required!'
     }
 
     if (!value.message) {
-        errors.message = 'message is required!'
+        errors.message = 'Message is required!'
     }
 
     return errors;

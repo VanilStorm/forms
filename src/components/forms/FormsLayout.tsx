@@ -2,17 +2,22 @@ import React, {FC} from 'react';
 import './style.scss'
 import {IUser} from "../../types/userType";
 import {IErrorTypes} from "../../types/validateErrorTypes";
-import {nameValidate} from "../../validates/nameValidate";
 
 interface Props {
     user: IUser,
     formErrors: IErrorTypes,
+    handleDelete: any,
     handleNameValidate: any,
+    handleEmailValidate: any,
+    handleMessageValidate: any,
     handleChange: any,
     handleSubmit: any,
 }
 
-const FormsLayout: FC<Props> = ({user, handleChange, handleSubmit, formErrors, handleNameValidate}) => {
+const FormsLayout: FC<Props> = ({user, handleChange, handleSubmit,
+                                    formErrors, handleNameValidate, handleEmailValidate,
+                                    handleMessageValidate, handleDelete
+}) => {
 
     return (
         <div className="container">
@@ -39,6 +44,7 @@ const FormsLayout: FC<Props> = ({user, handleChange, handleSubmit, formErrors, h
                             placeholder="Email"
                             name="email"
                             value={user.email}
+                            onBlur={handleEmailValidate}
                             onChange={handleChange}
                         />
 
@@ -48,10 +54,11 @@ const FormsLayout: FC<Props> = ({user, handleChange, handleSubmit, formErrors, h
                     <div className="field">
                         <div className="label">Phone</div>
                         <input
-                            type="number"
+                            type="text"
                             placeholder="Number"
                             name="phone"
                             value={user.phone}
+                            onKeyDown={handleDelete}
                             onChange={handleChange}
                         />
 
@@ -75,6 +82,7 @@ const FormsLayout: FC<Props> = ({user, handleChange, handleSubmit, formErrors, h
                         <textarea placeholder="Enter your massage"
                                   name="message"
                                   value={user.message}
+                                  onBlur={handleMessageValidate}
                                   onChange={handleChange}
                         />
 
