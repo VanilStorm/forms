@@ -1,3 +1,9 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 body {
   background: rgb(2, 0, 36);
   background: radial-gradient(
@@ -40,8 +46,13 @@ body {
         p {
           position: absolute;
 
-          right: 60%;
-          top: 15px;
+          right: 0;
+          top: 18px;
+
+          width: 200px;
+          height: 20px;
+
+          font-size: 13px;
         }
 
         input {
@@ -63,6 +74,7 @@ body {
         textarea {
           width: 100%;
           margin: 20px 0;
+          resize: none;
         }
       }
 

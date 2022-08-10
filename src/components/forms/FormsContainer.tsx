@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {FC} from "react";
 import FormsLayout from "./FormsLayout";
 import {IUser} from "../../types/userType";
+import {IErrorTypes} from "../../types/validateErrorTypes";
+import {validate} from "../../validates/formValidateOnSubmit";
+import {nameValidate} from "../../validates/nameValidate";
 
 const FormsContainer: FC = () => {
 
@@ -11,37 +14,41 @@ const FormsContainer: FC = () => {
         phone: '',
         birthday: '',
         message: '',
-    })
+    });
 
-    const changeUserName = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({...user, name: `${e.target.value}` })
+    const [formErrors, setFormErrors] = useState<IErrorTypes>({});
+    const [isSubmit, setIsSubmit] = useState<Boolean>(false);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+        const {name, value} = e.target;
+
+        if (name === 'name') {
+            setUser({...user, [name]: value.toUpperCase() })
+
+            return;
+        }
+
+        setUser({...user, [name]: value })
     }
 
-    const changeEmail = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({...user, email: `${e.target.value}`})
+    const handleSubmit = (e :React.SyntheticEvent): void => {
+        e && e.preventDefault();
+
+        setFormErrors(validate(user));
     }
 
-    const changePhone = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({...user, phone: `${e.target.value}`})
-    }
+    const handleNameValidate = (): void => setFormErrors(nameValidate(user));
 
-    const changeBDay = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({...user, birthday: `${e.target.value}`})
-    }
-
-    const changeMessage = (e: React.ChangeEvent<HTMLInputElement>): void => {
-        setUser({...user, message: `${e.target.value}`})
-    }
-
-    console.log(user)
+    // useEffect(()=> {
+    //     setFormErrors(validate(user));
+    // }, [formErrors])
 
     return (
         <FormsLayout user={user}
-                     changeUserName={changeUserName}
-                     changeEmail={changeEmail}
-                     changePhone={changePhone}
-                     changeBDay={changeBDay}
-                     changeMessage={changeMessage}
+                     handleChange={handleChange}
+                     handleSubmit={handleSubmit}
+                     formErrors={formErrors}
+                     handleNameValidate={handleNameValidate}
         />
     );
 };
